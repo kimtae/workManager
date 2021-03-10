@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+    <typeAliases>
+        <typeAlias type="work.manager.user.UserVO" alias="UserVO" />
+        <typeAlias type="work.manager.paging.PagingVO" alias="PagingVO" />
+        <typeAlias type="work.manager.project.ProjectVO" alias="ProjectVO" />
+        <typeAlias type="work.manager.work.WorkVO" alias="WorkVO" />
+        <typeAlias type="work.manager.work.FileVO" alias="FileVO" />
+        <typeAlias type="work.manager.project.SearchVO" alias="SearchVO" />
+        
+        <typeAlias type="work.manager.comment.CommentVO" alias="CommentVO" />
+    </typeAliases>
+</configuration>

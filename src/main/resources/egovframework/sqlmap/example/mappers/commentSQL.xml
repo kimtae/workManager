@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.manager.comment.CommentMapper">
+	<insert id="add" parameterType="CommentVO">
+		INSERT INTO "comment"
+		(cm_num, cm_wnum, cm_content, cm_using, cm_writer, cm_date, cm_modify_date)
+		VALUES(nextval('seq_comment'), #{cm_wnum}, #{cm_content}, 1, #{cm_writer}, now(),now())
+
+	</insert>	
+	<select id="list" parameterType="int" resultType="CommentVO">
+		select * from "comment" where cm_wnum = #{work_num}
+	</select>
+	
+	<select id="getComment" parameterType="int" resultType="CommentVO">
+		select * from "comment" where cm_num = #{cm_num}
+	</select>
+	
+	<update id="modify" parameterType="CommentVO">
+		UPDATE "comment"
+		SET cm_content=#{cm_content}, cm_modify_date = now()
+		WHERE cm_num=#{cm_num}
+		
+	</update>
+	<update id="delete" parameterType="int">
+		update "comment" set cm_using = 0 where cm_num =#{cm_num}
+	</update>
+	<!-- <delete id="delete" parameterType="int">
+		DELETE FROM "comment" WHERE cm_num = #{cm_num}
+	</delete> -->
+</mapper>

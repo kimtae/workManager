@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.manager.work.WorkMapper">
+
+	<insert id="write" parameterType="WorkVO">
+		INSERT INTO "work"
+		(work_num, 
+		 work_pr_num, 
+		 work_title, 
+		 work_content,
+		 work_progress, 
+		 work_writer,
+		 reg_date,
+		 work_modify_date,
+		 work_using)
+		 VALUES(nextval('intern2."seq_work"'), #{work_pr_num}, #{work_title}, #{work_content}, #{work_progress}, #{work_writer}, now(), now(),1)
+	</insert>
+	
+
+	<insert id="fileUpload" parameterType="FileVO">
+		INSERT INTO "file"
+		(file_num,
+		file_wnum,
+		file_name,
+		file_size,
+		file_original_name,
+		file_using)
+		VALUES(
+		nextval('intern2."seq_file"'),
+		#{file_wnum},
+		#{file_name},
+		#{file_size},
+		#{file_original_name},
+		1)
+
+	</insert>
+	
+	<select id="getWorkNum" resultType="int">
+		select max(work_num) from "work"
+	</select>
+	
+	<select id="getWorkDetail" parameterType="int" resultType="WorkVO">
+		select * from "work" where work_num = #{work_num}
+	</select>
+	
+	<select id="getFile" parameterType="int" resultType="FileVO">
+		select * from "file" where file_wnum = #{work_num}
+	</select>
+	
+	<select id="detailFile" parameterType="int" resultType="FileVO">
+		select * from "file" where file_num = #{file_num}
+	</select>
+	
+	<update id="modify" parameterType="WorkVO">
+		UPDATE "work"
+		SET work_title=#{work_title}, work_content=#{work_content}, work_modify_date=now(), work_progress=#{work_progress}
+		WHERE work_num=#{work_num}
+	</update>
+	
+	
+	<update id="fileDelete" parameterType="int">
+		update "file" set file_using = 0 where file_num = #{file_num}
+	</update>
+	<!-- <delete id="fileDelete" parameterType="int">
+		DELETE FROM "file" WHERE file_num = #{file_num}
+	</delete> -->
+	
+	<update id="delete" parameterType="int">
+		update "work" set work_using = 0 where work_num = #{work_num}
+	</update>
+	
+	<!-- <delete id="delete" parameterType="int">
+		DELETE FROM "work" WHERE work_num = #{work_num}
+	</delete> -->
+</mapper>

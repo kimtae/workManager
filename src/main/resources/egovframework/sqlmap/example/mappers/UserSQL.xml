@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.manager.user.UserMapper">
+	
+	<insert id="register" parameterType="UserVO">
+		INSERT INTO "user"
+		(user_id, user_pw, user_name, user_type, user_using, user_reg_date, user_modify_date)
+		VALUES(#{user_id}, #{user_pw}, #{user_name}, 1, 0, now(), now());
+
+	</insert>
+	
+
+	<select id="allowLogin" parameterType="String" resultType="int">
+		select user_using from "user" where user_id = #{user_id}
+	</select>
+
+	<select id="loginCheck" parameterType="String" resultType="String">
+		select user_pw from "user" where user_id = #{user_id}
+	</select>
+	<select id="getMyInfo" parameterType="String" resultType="UserVO">
+		select
+		* from "user";
+	</select>
+	<select id="idCheck" parameterType="String" resultType="int">
+		select
+		count(*) from "user" where user_id = #{user_id}
+	</select>
+	<select id="deleteCheck" parameterType="UserVO" resultType="int">
+		select count(*) from "user" where user_id = #{user_id} and
+		user_pw = #{user_pw} and user_name= #{user_name}
+	</select>
+	<update id="modify" parameterType="UserVO">
+		update "user" set
+		user_pw = #{user_pw}, user_name = #{user_name}, user_modify_date =now(), user_modify_writer = #{user_id}
+		where user_id = #{user_id}
+	</update>
+	<delete id="doDelete" parameterType="String">
+		delete from "user"
+		where user_id = #{user_id}
+	</delete>
+
+	<select id="checkUserType" parameterType="String" resultType="int">
+		select user_type from "user" where user_id = #{user_id}
+	</select>
+
+	<update id="userUnLock" parameterType="String">
+		update "user" set
+		user_using = 1 where user_id = #{user_id}
+	</update>
+	<update id="userLock" parameterType="String">
+		update "user" set
+		user_using = 0 where user_id = #{user_id}
+	</update>
+
+	<update id="rootModifyUser" parameterType="UserVO">
+		update "user"
+		set user_name=#{user_name}, user_pw = #{user_pw}, user_modify_date =
+		now(), user_modify_writer = 'intern2'
+		where user_id =
+		#{user_id}
+	</update>
+	<update id="userTypeModify" parameterType="UserVO">
+		 update "user"
+		 set user_type = #{user_type}
+		 where user_id = #{user_id}
+	</update>
+
+
+	
+</mapper>

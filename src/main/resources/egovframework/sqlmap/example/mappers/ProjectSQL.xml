@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.manager.project.ProjectMapper">
+
+
+	<insert id="addProject" parameterType="ProjectVO">
+		INSERT INTO
+		"project"
+		(pr_num, pr_title, pr_content, pr_using, pr_writer, reg_date,
+		pr_modify_date)
+		VALUES(nextval('seq_project'), #{pr_title},
+		#{pr_content}, 1, #{pr_writer}, noW(),now())
+
+	</insert>
+
+	<!-- <select id="getTitle" parameterType="ProjectVO" resultType="String"> 
+		select pr_title from intern2.project where pr_num = #{pr_num} and pr_writer 
+		= #{pr_writer} </select> -->
+	<select id="getDetail" parameterType="int" resultType="ProjectVO">
+		select *
+		from "project" where pr_num = #{pr_num}
+	</select>
+
+	<update id="projcetDelete" parameterType="int">
+		update "project" set
+		pr_using =0 where pr_num = #{pr_num}
+	</update>
+	<update id="projectDeleteWork" parameterType="int">
+		update "work" set
+		work_using = 0 where work_pr_num = #{pr_num}
+	</update>
+	<!-- <delete id="projcetDelete" parameterType="int"> DELETE FROM "project" 
+		WHERE pr_num = #{pr_num} </delete> -->
+
+	<update id="modify" parameterType="ProjectVO">
+		UPDATE "project"
+		SET
+		pr_title=#{pr_title},
+		pr_content=#{pr_content},pr_modify_writer=#{pr_writer},
+		pr_modify_date=now()
+		WHERE pr_num=#{pr_num};
+
+	</update>
+	
+</mapper>

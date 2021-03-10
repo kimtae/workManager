@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.manager.paging.PagingMapper">
+
+
+	<select id="countAllUser" resultType="int">
+		select count(*) from "user"
+	</select>
+	<select id="selectUser" parameterType="PagingVO" resultType="UserVO">
+		select * from "user" order by user_reg_date asc,user_id offset #{start} limit #{cntPerPage}
+	</select>
+	<select id="countProject" parameterType="String" resultType="int">
+		select count(*) from "project" where pr_using = 1
+	</select>
+	<select id="selectProject" parameterType="PagingVO" resultType="ProjectVO">
+		select * from "project" where pr_using = 1 order by pr_num desc offset #{start} limit #{cntPerPage}
+	</select>
+	<select id="countWork" parameterType="int" resultType="int">
+		select count(*) from "work" where work_pr_num = #{work_pr_num} and work_using = 1
+	</select>
+	<select id="selectWork" parameterType="PagingVO" resultType="WorkVO">
+		select * from "work" where work_pr_num = #{work_pr_num} and work_using = 1 order by work_num desc offset #{start} limit #{cntPerPage}
+	</select>
+	<!-- select * from intern2."work" order by work_num desc offset 0 limit 5 ; -->
+	<select id="searchCount" parameterType="SearchVO" resultType="int">
+		
+		select count(*) from 
+		<if test="con1 !=null and con1 != ''">
+			<if test="con1 == 1">
+				"project"
+			</if>
+			<if test="con1 == 2">
+				"work"
+			</if>
+		</if>
+		WHERE 1=1	
+		<choose>
+			<when test="con2 == 1">
+				AND reg_date > now() -interval'1 months'
+			</when>
+			<when test="con2 == 2">
+				AND reg_date > now() -interval'2 months'
+			</when>
+			<when test="con2 == 3">
+				AND reg_date > now() -interval'3 months'
+			</when>
+			<when test="con2 == 4">
+				AND reg_date > now() -interval'4 months'
+			</when>
+			<when test="con2 == 5">
+				AND reg_date > now() -interval'5 months'
+			</when>
+			<when test="con2 == 6">
+				AND reg_date > now() -interval'6 months'
+			</when>
+			<when test="con2 == 7">
+				AND reg_date > now() -interval'7 months'
+			</when>
+			<when test="con2 == 8">
+				AND reg_date > now() -interval'8 months'
+			</when>
+			<when test="con2 == 9">
+				AND reg_date > now() -interval'9 months'
+			</when>
+			<when test="con2 == 10">
+				AND reg_date > now() -interval'10 months'
+			</when>
+			<when test="con2 == 11">
+				AND reg_date > now() -interval'11 months'
+			</when>
+			<when test="con2 == 12">
+				AND reg_date > now() -interval'12 months'
+			</when>
+		</choose>
+		<if test="con1 !=null and con1 != ''">
+			<if test="con1 == 1">
+				AND (pr_title like '%'||#{con3}||'%' or pr_content like '%'||#{con3}||'%')
+			</if>
+			<if test="con1 == 2">
+				AND (work_title like '%'||#{con3}||'%' or work_content like '%'||#{con3}||'%')
+			</if>
+		</if>	
+	</select>
+	
+	<select id="searchPrList" parameterType="SearchVO" resultType="ProjectVO">
+		select * from "project"
+		WHERE 1=1	
+		<choose>
+			<when test="con2 == 1">
+				AND reg_date > now() -interval'1 months'
+			</when>
+			<when test="con2 == 2">
+				AND reg_date > now() -interval'2 months'
+			</when>
+			<when test="con2 == 3">
+				AND reg_date > now() -interval'3 months'
+			</when>
+			<when test="con2 == 4">
+				AND reg_date > now() -interval'4 months'
+			</when>
+			<when test="con2 == 5">
+				AND reg_date > now() -interval'5 months'
+			</when>
+			<when test="con2 == 6">
+				AND reg_date > now() -interval'6 months'
+			</when>
+			<when test="con2 == 7">
+				AND reg_date > now() -interval'7 months'
+			</when>
+			<when test="con2 == 8">
+				AND reg_date > now() -interval'8 months'
+			</when>
+			<when test="con2 == 9">
+				AND reg_date > now() -interval'9 months'
+			</when>
+			<when test="con2 == 10">
+				AND reg_date > now() -interval'10 months'
+			</when>
+			<when test="con2 == 11">
+				AND reg_date > now() -interval'11 months'
+			</when>
+			<when test="con2 == 12">
+				AND reg_date > now() -interval'12 months'
+			</when>
+		</choose>
+		<if test="con1 !=null and con1 != ''">
+			AND (pr_title like '%'||#{con3}||'%' OR pr_content like '%'||#{con3}||'%') order by pr_num desc offset #{start} limit #{cntPerPage}
+		</if>
+		
+	</select>
+	
+	<select id="searchWoList" parameterType="SearchVO" resultType="WorkVO">
+		select * from "work"
+		WHERE 1=1	
+		<choose>
+			<when test="con2 == 1">
+				AND reg_date > now() -interval'1 months'
+			</when>
+			<when test="con2 == 2">
+				AND reg_date > now() -interval'2 months'
+			</when>
+			<when test="con2 == 3">
+				AND reg_date > now() -interval'3 months'
+			</when>
+			<when test="con2 == 4">
+				AND reg_date > now() -interval'4 months'
+			</when>
+			<when test="con2 == 5">
+				AND reg_date > now() -interval'5 months'
+			</when>
+			<when test="con2 == 6">
+				AND reg_date > now() -interval'6 months'
+			</when>
+			<when test="con2 == 7">
+				AND reg_date > now() -interval'7 months'
+			</when>
+			<when test="con2 == 8">
+				AND reg_date > now() -interval'8 months'
+			</when>
+			<when test="con2 == 9">
+				AND reg_date > now() -interval'9 months'
+			</when>
+			<when test="con2 == 10">
+				AND reg_date > now() -interval'10 months'
+			</when>
+			<when test="con2 == 11">
+				AND reg_date > now() -interval'11 months'
+			</when>
+			<when test="con2 == 12">
+				AND reg_date > now() -interval'12 months'
+			</when>
+		</choose>
+		<if test="con1 !=null and con1 != ''">
+		AND work_title like '%'||#{con3}||'%' or work_content like '%'||#{con3}||'%' order by work_num asc offset #{start} limit #{cntPerPage}
+		</if>
+	</select>
+</mapper>
