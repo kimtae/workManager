@@ -1018,6 +1018,8 @@
 		var user_id = "<c:out value="${user_id}"/>";
 		location.href="/user/loginOk.do?user_id="+user_id;
 	}
+	
+	
 	//내정보
 	function userInfo() {
 		var user = '';
